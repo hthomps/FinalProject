@@ -1,0 +1,24 @@
+---
+title: "Hayden-812FinalProject"
+author: "Hayden Wainwright"
+date: "3/19/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## BIOL 812 Final Project Hayden's Contributions
+
+1. import data and re-arrange it done by Regan
+
+```{r}
+library(dplyr)
+library(reshape2)
+library(ggplot2)
+dat <- read.csv("mothFile6geneExpression.csv")
+
+
+```
+

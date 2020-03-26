@@ -1,0 +1,28 @@
+---
+title: "Marco_rmd"
+author: "Marco Lee"
+date: "March 26, 2020"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+#Load library and wrangled data
+```{r}
+library(dplyr)
+library(tidyverse)
+library(seqinr)
+load("MeltedData.RData")
+```
+
+#Load protein sequences
+```{r}
+#code used to load original file
+# msex.prot<-read.fasta("ms_ogs_proteins.fasta", seqtype = "AA", as.string = TRUE, set.attributes = FALSE)
+
+#save file as RData to load file faster in the future
+# save(msex.prot, file="msex_prot.RData")
+
+#Load Rdata
+load("msex_prot.RData")
+```

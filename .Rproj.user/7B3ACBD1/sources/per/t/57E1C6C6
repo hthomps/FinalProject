@@ -1,0 +1,24 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1585248196723.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3174000404",
+    "id" : "57E1C6C6",
+    "lastKnownWriteTime" : 1585250527,
+    "last_content_update" : 1585250527210,
+    "path" : "~/GitHub/FinalProject/marco_rmd.Rmd",
+    "project_path" : "marco_rmd.Rmd",
+    "properties" : {
+        "chunk_output_type" : "console",
+        "cursorPosition" : "27,3",
+        "scrollLine" : "0",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

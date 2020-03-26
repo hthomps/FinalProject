@@ -167,6 +167,8 @@ fat_dat <- mydat %>%
   group_by(gene_id, life_stage) %>% 
   summarise(mean_expression = mean(copynumber))
 
+###not using these
+
 #HEAD
 ggplot(head_dat, aes(x = life_stage, y = mean_expression, colour = gene_id, group = gene_id)) +
   geom_point() +

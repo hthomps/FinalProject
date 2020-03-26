@@ -5,7 +5,8 @@ library(ggplot2)
 library(dplyr)
 library(cowplot)
 
-#need to use dat2 from Regan's file - should export it as a csv so it's available in github
+load("MeltedData.RData")
+
 mydat <- dat2
 mydat$tissue <- as.factor(mydat$tissue)
 mydat$life_stage <- as.factor(mydat$life_stage)
@@ -19,6 +20,16 @@ Adat <- mydat %>%
   group_by(tissue, life_stage) %>% 
   summarise(mean_expression = mean(copynumber)) #use mean expression values because some tissue/life stage combos have sub-life stages
 
+A <- ggplot(Adat, aes(x = life_stage, y = mean_expression, colour = tissue, group = tissue)) +
+  geom_point(size = 4, alpha = 0.7) +
+  geom_line() +
+  theme_classic() +
+  scale_y_continuous(limits = c(0, 80000), breaks = seq(0, 80000, 10000), name = "Copy number") +
+  scale_x_discrete(labels = c("Second instar larva", "Third instar larva", 
+                              "Fourth instar larva", "Fifth instar larva", "Pupa", "Adult"),
+                   name = "Life stage")
+
+#with facet grid
 A <- ggplot(Adat, aes(x = life_stage, y = mean_expression, colour = tissue, group = tissue)) +
   geom_point(size = 4, alpha = 0.7) +
   geom_line() +
@@ -91,7 +102,7 @@ E <- ggplot(Edat, aes(x = life_stage, y = mean_expression, colour = tissue, grou
                    name = "Life stage")
 
 #with facet grid
-ggplot(Edat, aes(x = life_stage, y = mean_expression, colour = tissue, group = tissue)) +
+E <- ggplot(Edat, aes(x = life_stage, y = mean_expression, colour = tissue, group = tissue)) +
   geom_point(size = 4, alpha = 0.7) +
   geom_line() +
   facet_grid(scales = "free", rows = vars(tissue)) +
@@ -118,7 +129,7 @@ FF <- ggplot(Fdat, aes(x = life_stage, y = mean_expression, colour = tissue, gro
                    name = "Life stage")
 
 #with facet grid
-ggplot(Fdat, aes(x = life_stage, y = mean_expression, colour = tissue, group = tissue)) +
+FF <- ggplot(Fdat, aes(x = life_stage, y = mean_expression, colour = tissue, group = tissue)) +
   geom_point(size = 4, alpha = 0.7) +
   geom_line() +
   facet_grid(scales = "free", rows = vars(tissue)) +

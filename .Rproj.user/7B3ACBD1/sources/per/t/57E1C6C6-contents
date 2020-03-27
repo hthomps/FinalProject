@@ -22,7 +22,23 @@ load("MeltedData.RData")
 
 #save file as RData to load file faster in the future
 # save(msex.prot, file="msex_prot.RData")
+```
 
-#Load Rdata
+#Wrangle sequences
+```{r}
+# protein=names(msex.prot) #extract protein ID from list
+# msex.prot<-unname(msex.prot) #unname list
+# length(msex.prot) #27403 entries
+# length(protein) #27403 entries
+# seq<-unlist(msex.prot);rm(msex.prot)
+# 
+# msex.prot<-data.frame(protein, seq); rm(protein, seq)
+# msex.prot$seq<-as.character(msex.prot$seq)
+# str(msex.prot)
+# 
+# #save file as RData to load file faster in the future
+# save(msex.prot, file="msex_prot.RData")
+
+#Load data
 load("msex_prot.RData")
 ```

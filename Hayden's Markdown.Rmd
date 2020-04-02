@@ -110,11 +110,12 @@ fatdat2 <- fatdat %>% dcast(ï..gene_id ~ life_stage, mean) %>% mutate(diff = ab
 #####  making another new line
 #### one more new line to make the table line up on its own page
 
-### Table 1. Top three genes experiences the greatest change in head, gut and fat tissue of *Manduca sexta* between the 5th instar and adult life stage
+### Table 1. Top three genes experiencing the greatest change in expression within the head, gut and fat tissue of *Manduca sexta* between the 5th instar and adult life stage. Positive values under Change in Expression Level indicate an increase in expression level in the adult stage while negative values indicate a decrease in expression level. 
+
 | Gene ID | Tissue Type | Expresssion Level (5th Instar) (FPKN) | Expression Level (Adult) (FPKN) | Change in Expression Level (FPKN) |
 |:-------:|:-----------:|:----------------:|:--------------:|:---------------------------:|
-| Msex2.07524 | Head | 74964.413 | 439.172 | 74525.241 |
-| Msex2.15420 | Head | 3602.613 | 75574.228 | -71971.615 |
+| Msex2.07524 | Head | 74964.413 | 439.172 | -74525.241 |
+| Msex2.15420 | Head | 3602.613 | 75574.228 | 71971.615 |
 |	Msex2.14343 | Head | 43171.260 | 2205.552 | -40965.708 |
 | Msex2.04431 | Gut | 118.138 | 82120.42 | 82002.282 |
 | Msex2.15420 | Gut | 17344.096 | 62948.05 | 45603.954 |
@@ -122,7 +123,6 @@ fatdat2 <- fatdat %>% dcast(ï..gene_id ~ life_stage, mean) %>% mutate(diff = ab
 | Msex2.15420 | Fat | 68477.053 | 237523.435 | 169046.382 | 
 | Msex2.01694 | Fat | 68823.610	|	26.090 | -68797.520 |
 | Msex2.10735 | Fat | 27176.113 | 9.570 | -27166.543 |
-
 
 
 

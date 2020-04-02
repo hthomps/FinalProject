@@ -1,0 +1,83 @@
+---
+title: "Marco_rmd"
+author: "Marco Lee"
+date: "March 26, 2020"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+#Load library and wrangled data
+```{r}
+library(dplyr)
+library(tidyverse)
+library(seqinr)
+load("MeltedData.RData") #load wrangled data
+```
+
+#Load protein sequences
+```{r}
+#Load protein sequence file
+# msex.prot<-read.fasta("ms_ogs_proteins.fasta", seqtype = "AA", as.string = TRUE, set.attributes = FALSE)
+```
+
+#Wrangle sequences
+Create a data frame with ID and sequences of protein
+```{r}
+# protein=names(msex.prot) #extract protein ID from list
+# msex.prot<-unname(msex.prot) #unname list
+# length(msex.prot) #27403 entries
+# length(protein) #27403 entries
+# seq<-unlist(msex.prot);rm(msex.prot)
+# 
+# msex.prot<-data.frame(protein, seq); rm(protein, seq)
+# msex.prot$seq<-as.character(msex.prot$seq)
+# str(msex.prot)
+# 
+# #save file as RData to load file faster in the future
+# save(msex.prot, file="msex_prot.RData")
+
+#Load data
+load("msex_prot.RData")
+
+msex.prot$protein<-gsub("-(\\w+)$", "", msex.prot$protein)#remove letters after gene ID
+```
+
+#Identify the three most differentially expressed genes in each of the three tissues
+```{r}
+headdat2$gene_id<- as.character(headdat2$gene_id)
+fatdat2$gene_id<- as.character(fatdat2$gene_id)
+gutdat2$gene_id<- as.character(gutdat2$gene_id)
+
+goi<- c(headdat2$gene_id[1:3], gutdat2$gene_id[1:3], fatdat2$gene_id[1:3])
+goi<-unique(goi)
+goi #six unique genes
+```
+
+#Select the protein sequences of the 5 genes of interest from msex.prot
+```{r}
+msex.prot.goi<-data.frame(protein=rep(NA, length(goi)), seq=rep(NA, length(goi)))
+for(i in 1:length(goi)){
+  if(nrow(msex.prot[msex.prot$protein==goi[i],])==1){msex.prot.goi[i,]<-msex.prot[msex.prot$protein==goi[i],]}else
+    if(nrow(msex.prot[msex.prot$protein==goi[i],])>1){
+      x<-msex.prot[msex.prot$protein==goi[i],]
+      msex.prot.goi[i,]<-x[1,]
+      for(j in 1:(nrow(msex.prot[msex.prot$protein==goi[i],])-1)){
+        msex.prot.goi<-rbind(msex.prot.goi,c(NA, NA))
+      msex.prot.goi[nrow(msex.prot.goi),]<-x[j+1,]}
+    }
+}
+str(msex.prot.goi)
+
+msex.prot.goi<-arrange(msex.prot.goi, protein)
+```
+
+#Export data frame into FASTA for local BLAST
+```{r}
+#convert data frame into list of single alphabets for export
+goi<-as.list(strsplit(msex.prot.goi$seq, ""))
+names(goi)<-msex.prot.goi$protein
+
+#export into FASTA
+write.fasta(sequences=goi, names=names(goi), file.out = "msex_goi.fasta")
+```

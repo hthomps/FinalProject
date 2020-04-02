@@ -4,7 +4,7 @@
 
 
 # load in transcriptome data
-dat <- read.csv("MothData.csv")
+dat <- read.csv("MothData.csv", header=T)
 # right now each column is a transcriptome and each row is a gene, 
 # with expression levels in the data cells
 # the transcriptome names include their tissue type and life stage
@@ -57,18 +57,18 @@ fatdat <- subdat %>% filter(tissue == "F") %>% group_by(gene_id, life_stage) %>%
 
 # now we cast it back out so there is a column for adult (A) and a column for larva (L5)
 # and then take the difference between those two columns 
-headdat2 <- headdat %>% dcast(gene_id ~ life_stage, mean) %>% mutate(diff = abs(A - L5))
+headdat2 <- headdat %>% dcast(gene_id ~ life_stage, mean) %>% mutate(diff = abs(A - L5)) %>% arrange(desc(diff))
 # now if we click the "diff" column in the data frame (opened through the environment)
 # it'll order them so we can see the max diff's 
 
 # the head genes with the greatest difference between adult and L5 are: 
 # Msex2.07524, Msex2.15420, Msex2.14343
 
-gutdat2 <- gutdat %>% dcast(gene_id ~ life_stage, mean) %>% mutate(diff = abs(A - L5))
+gutdat2 <- gutdat %>% dcast(gene_id ~ life_stage, mean) %>% mutate(diff = abs(A - L5)) %>% arrange(desc(diff))
 # the midgut genes with the greatest difference between adult and L5 are: 
 # Msex2.04431, Msex2.15420, Msex2.14343
 
-fatdat2 <- fatdat %>% dcast(gene_id ~ life_stage, mean) %>% mutate(diff = abs(A - L5))
+fatdat2 <- fatdat %>% dcast(gene_id ~ life_stage, mean) %>% mutate(diff = abs(A - L5)) %>% arrange(desc(diff))
 # the fatbody genes with the greatest difference between adult and L5 are: 
 # Msex2.15420, Msex2.01694, Msex2.10735
 

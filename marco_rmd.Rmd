@@ -33,13 +33,11 @@ gutdat2$gene_id<- as.character(gutdat2$gene_id)
 goi<- c(headdat2$gene_id[1:3], gutdat2$gene_id[1:3], fatdat2$gene_id[1:3])
 goi<-unique(goi)
 goi<-data.frame(goi=goi) #six unique genes
-
-msex.prot.goi<-msex.prot[goi$goi]
 ```
 
 #Select the protein sequences of the 6 genes of interest from msex.prot
 ```{r}
-msex.prot.goi<-msex.prot[goi$goi]
+msex.prot.goi<-msex.prot[goi$goi]; rm(msex.prot)
 msex.prot.goi
 ```
 
@@ -60,23 +58,27 @@ makeblastdb("insecta_prot.fasta", dbtype="prot", args="-out insecta_prot") #crea
 db.nt<-blast(db="insecta_nt", type="tblastn")
 db.nt
 
-goi1.x<-predict(db.nt, msex.prot.goi[1])
-goi1.x[1:5,]
+goi1.n<-predict(db.nt, msex.prot.goi[1])
+goi1.n[1:5,]
 
-goi2.x<-predict(db.nt, msex.prot.goi[2])
-goi2.x[1:5,]
+goi2.n<-predict(db.nt, msex.prot.goi[2])
+goi2.n[1:5,]
 
-goi3.x<-predict(db.nt, msex.prot.goi[3])
-goi3.x[1:5,]
+goi3.n<-predict(db.nt, msex.prot.goi[3])
+goi3.n[1:5,]
 
-goi4.x<-predict(db.nt, msex.prot.goi[4])
-goi4.x[1:5,]
+goi4.n<-predict(db.nt, msex.prot.goi[4])
+goi4.n[1:5,]
 
-goi5.x<-predict(db.nt, msex.prot.goi[5])
-goi5.x[1:5,]
+goi5.n<-predict(db.nt, msex.prot.goi[5])
+goi5.n[1:5,]
 
-goi6.x<-predict(db.nt, msex.prot.goi[6])
-goi6.x[1:5,]
+goi6.n<-predict(db.nt, msex.prot.goi[6])
+goi6.n[1:5,]
+
+goi.n<-rbind(goi1.n, goi2.n, goi3.n, goi4.n, goi5.n, goi6.n)
+goi.n$SubjectID<-as.character(goi.n$SubjectID)
+str(goi.n)
 ```
 ##blastp with Insecta proteins
 ```{r}
@@ -100,8 +102,26 @@ goi5.p[1:5,]
 
 goi6.p<-predict(db.p, msex.prot.goi[6])
 goi6.p[1:5,]
-```
 
+goi.p<-rbind(goi1.p, goi2.p, goi3.p, goi4.p, goi5.p, goi6.p)
+goi.p$SubjectID<-as.character(goi.p$SubjectID)
+```
+#Create dataframe of result
+```{r}
+goi_result<-data.frame(gene=rep(NA,6), tblastn=rep(NA,6), tblastn_ident=rep(NA,6), 
+                       blastp=rep(NA,6), blastp_ident=rep(NA,6))
+
+goi_result$gene<-goi$goi
+for(i in 1:nrow(goi_result)){
+  x<-goi.n[goi.n$QueryID==goi_result[i,]$gene,]
+  goi_result[i,2:3]<-x[1,2:3]
+  y<-goi.p[goi.p$QueryID==goi_result[i,]$gene,]
+  goi_result[i,4:5]<-y[1,2:3]
+  rm(x, y)
+}
+
+goi_result
+```
 #Export result
 ```{r}
 save.image("msex_goi.RData")

@@ -48,6 +48,7 @@ setwd("D:/user/Documents/NCBI_BLAST")
 ```
 
 ##Make blast database
+Databases are too big to upload onto GitHub. They are available upon request.
 ```{r}
 makeblastdb("insecta_nt.fasta", dbtype="nucl", args="-out insecta_nt") #create blast database of insecta nucleotides
 makeblastdb("insecta_prot.fasta", dbtype="prot", args="-out insecta_prot") #create blast database of insecta proteins

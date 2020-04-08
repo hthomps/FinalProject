@@ -54,7 +54,7 @@ makeblastdb("insecta_nt.fasta", dbtype="nucl", args="-out insecta_nt") #create b
 makeblastdb("insecta_prot.fasta", dbtype="prot", args="-out insecta_prot") #create blast database of insecta proteins
 ```
 
-##blastx with Insecta nucleotide
+##tblastn with Insecta nucleotide
 ```{r}
 db.nt<-blast(db="insecta_nt", type="tblastn")
 db.nt
@@ -77,10 +77,12 @@ goi5.n[1:5,]
 goi6.n<-predict(db.nt, msex.prot.goi[6])
 goi6.n[1:5,]
 
-goi.n<-rbind(goi1.n, goi2.n, goi3.n, goi4.n, goi5.n, goi6.n)
+goi.n<-rbind(goi1.n[1:5,], goi2.n[1:5,], goi3.n[1:5,], goi4.n[1:5,], goi5.n[1:5,], goi6.n[1:5,])
 goi.n$SubjectID<-as.character(goi.n$SubjectID)
+goi.n<-goi.n[complete.cases(goi.n),]
 str(goi.n)
 ```
+
 ##blastp with Insecta proteins
 ```{r}
 db.p<-blast(db="insecta_prot", type="blastp")
@@ -104,25 +106,12 @@ goi5.p[1:5,]
 goi6.p<-predict(db.p, msex.prot.goi[6])
 goi6.p[1:5,]
 
-goi.p<-rbind(goi1.p, goi2.p, goi3.p, goi4.p, goi5.p, goi6.p)
+goi.p<-rbind(goi1.p[1:5,], goi2.p[1:5,], goi3.p[1:5,], goi4.p[1:5,], goi5.p[1:5,], goi6.p[1:5,])
 goi.p$SubjectID<-as.character(goi.p$SubjectID)
+goi.p<-goi.p[complete.cases(goi.p),]
 ```
-#Create dataframe of result
-```{r}
-goi_result<-data.frame(gene=rep(NA,6), tblastn=rep(NA,6), tblastn_ident=rep(NA,6), 
-                       blastp=rep(NA,6), blastp_ident=rep(NA,6))
+I look through the top 5 hits of each BLAST (total of 10 over tblastn and blastp) for each gene to identify the consensus and most likely identity of each gene.
 
-goi_result$gene<-goi$goi
-for(i in 1:nrow(goi_result)){
-  x<-goi.n[goi.n$QueryID==goi_result[i,]$gene,]
-  goi_result[i,2:3]<-x[1,2:3]
-  y<-goi.p[goi.p$QueryID==goi_result[i,]$gene,]
-  goi_result[i,4:5]<-y[1,2:3]
-  rm(x, y)
-}
-
-goi_result
-```
 #Export result
 ```{r}
 save.image("msex_goi.RData")

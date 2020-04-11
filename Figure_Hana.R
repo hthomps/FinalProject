@@ -79,7 +79,7 @@ B <- ggplot(Bdat, aes(x = life_stage, y = mean_expression, colour = tissue, grou
   theme_classic() +
   theme(axis.title = element_blank(), legend.position = "none",
         axis.text.x = element_blank()) +
-  scale_y_continuous(limits = c(0, 300000), breaks = seq(0, 300000, 100000), labels = comma) +
+  scale_y_continuous(limits = c(0, 300000), breaks = seq(0, 300000, 50000), labels = comma) +
   scale_colour_manual(labels = c("Head", "Midgut", "Fatbody"), values = mycols)
 
 #gene Msex2.14343 (gene C)
@@ -196,8 +196,16 @@ y.lab <- textGrob("Mean gene expression (FPKM)", rot = 90)
 grid.arrange(arrangeGrob(plot, left = y.lab))
 
 #trying a different order
-plot2 <- plot_grid(B, D2, C, Ab2, Eb, Fb, ncol = 3, nrow = 2, labels = genes)
+setwd("/Users/hanathompson/Documents/GitHub/FinalProject")
+
+png(filename = "gene_fig.png", width = 10, height = 7, units = "in", 
+    pointsize = 12, bg = "transparent",  res = 300)
+
+plot2 <- plot_grid(B, D2, C, Ab2, Eb, Fb, ncol = 3, nrow = 2, 
+                   labels = genes, align = "hv")
 grid.arrange(arrangeGrob(plot2, left = y.lab))
+
+dev.off()
 
 #should we keep small graph axis limits the same as well?
 #do we need an x-axis label?

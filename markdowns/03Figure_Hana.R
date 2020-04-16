@@ -179,7 +179,7 @@ Fb <- ggplot(Fdat, aes(x = life_stage, y = mean_expression, colour = tissue, gro
 #Make composite plot
 
 #save figure
-png(filename = "gene_fig.png", width = 10.75, height = 7, units = "in", 
+png(filename = "figures/gene_fig.png", width = 10.75, height = 7, units = "in", 
     pointsize = 12, bg = "white",  res = 300)
 
 plot <- plot_grid(A, B, C, Db, Eb, Fb, ncol = 3, nrow = 2, 

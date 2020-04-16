@@ -39,7 +39,8 @@ A <- ggplot(Adat, aes(x = life_stage, y = mean_expression, colour = tissue, grou
   geom_line() +
   theme_classic() +
   theme(axis.title = element_blank(), legend.position = "none",
-        axis.text.x = element_blank(), text = element_text(size = 13)) +
+        axis.text.x = element_blank(), text = element_text(size = 13),
+        plot.margin = unit(c(0,0,0,0), "cm")) +
   scale_y_continuous(limits = c(0, 300000), breaks = seq(0, 300000, 50000), labels = comma) +
   scale_colour_manual(labels = c("Head", "Midgut", "Fatbody"), values = mycols)
 
@@ -54,7 +55,8 @@ B <- ggplot(Bdat, aes(x = life_stage, y = mean_expression, colour = tissue, grou
   geom_line() +
   theme_classic() +
   theme(axis.title = element_blank(), legend.position = "none", 
-        axis.text.x = element_blank(), text = element_text(size = 13)) +
+        axis.text.x = element_blank(), text = element_text(size = 13),
+        plot.margin = unit(c(0,0,0,0), "cm")) +
   scale_y_continuous(limits = c(0, 82120.42), breaks = seq(0, 80000, 10000), labels = comma) +
   scale_colour_manual(labels = c("Fatbody", "Midgut", "Head"), values = mycols)
 
@@ -70,7 +72,8 @@ C <- ggplot(Cdat, aes(x = life_stage, y = mean_expression, colour = tissue, grou
   theme_classic() +
   theme(axis.title = element_blank(), legend.position = c(0.8, 0.9), 
         legend.title = element_blank(), legend.text = element_text(size = 14),
-        axis.text.x = element_blank(), text = element_text(size = 13)) +
+        axis.text.x = element_blank(), text = element_text(size = 13), 
+        plot.margin = unit(c(0,0,0,0), "cm")) +
   scale_y_continuous(limits = c(0, 80000), breaks = seq(0, 80000, 10000), labels = comma) +
   scale_colour_manual(labels = c("Head", "Midgut", "Fatbody"), values = mycols)
 
@@ -103,12 +106,13 @@ Db <- ggplot(Ddat, aes(x = life_stage, y = mean_expression, colour = tissue, gro
   geom_point(size = 4) +
   geom_line() +
   theme_classic() +
-  theme(axis.title = element_blank(), legend.position = "none", text = element_text(size = 13)) +
+  theme(axis.title = element_blank(), legend.position = "none", 
+        text = element_text(size = 13), plot.margin = unit(c(0,0,0,0), "cm")) +
   scale_y_continuous(limits = c(0, 80000), breaks = seq(0, 80000, 10000), labels = comma) +
   scale_x_discrete(labels = c("Second\ninstar\nlarva", "Third\ninstar\nlarva", 
                               "Fourth\ninstar\nlarva", "Fifth\ninstar\nlarva", "Pupa", "Adult")) +
   scale_colour_manual(labels = c("Head", "Midgut", "Fatbody"), values = mycols) +
-  annotation_custom(ggplotGrob(Ds), xmin = 0.6, xmax = 3.1, ymin = 50000, ymax = 80000)
+  annotation_custom(ggplotGrob(Ds), xmin = 0.6, xmax = 3.1, ymin = 45000, ymax = 75000)
 
 #gene Msex2.01694 (gene E)
 Edat <- mydat %>% 
@@ -135,12 +139,13 @@ Eb <- ggplot(Edat, aes(x = life_stage, y = mean_expression, colour = tissue, gro
   geom_point(size = 4, alpha = 0.7) +
   geom_line() +
   theme_classic() +
-  theme(axis.title = element_blank(), legend.position = "none", text = element_text(size = 13)) +
+  theme(axis.title = element_blank(), legend.position = "none", 
+        text = element_text(size = 13), plot.margin = unit(c(0,0,0,0), "cm")) +
   scale_y_continuous(limits = c(0, 80000), breaks = seq(0, 80000, 10000), labels = comma) +
   scale_x_discrete(labels = c("Second\ninstar\nlarva", "Third\ninstar\nlarva", 
                               "Fourth\ninstar\nlarva", "Fifth\ninstar\nlarva", "Pupa", "Adult")) +
   scale_colour_manual(labels = c("Fatbody", "Midgut", "Head"), values = mycols) +
-  annotation_custom(ggplotGrob(Es), xmin = 0.6, xmax = 3.1, ymin = 50000, ymax = 80000)
+  annotation_custom(ggplotGrob(Es), xmin = 0.6, xmax = 3.1, ymin = 45000, ymax = 75000)
 
 
 #gene Msex2.10735 (gene F)
@@ -169,12 +174,12 @@ Fb <- ggplot(Fdat, aes(x = life_stage, y = mean_expression, colour = tissue, gro
   geom_line() +
   theme_classic() +
   theme(axis.title = element_blank(), legend.position = "none", 
-        text = element_text(size = 13)) +
+        text = element_text(size = 13), plot.margin = unit(c(0,0,0,0), "cm")) +
   scale_y_continuous(limits = c(0, 80000), breaks = seq(0, 80000, 10000), labels = comma) +
   scale_x_discrete(labels = c("Second\ninstar\nlarva", "Third\ninstar\nlarva", 
                               "Fourth\ninstar\nlarva", "Fifth\ninstar\nlarva", "Pupa", "Adult")) +
   scale_colour_manual(labels = c("Fatbody", "Midgut", "Head"), values = mycols) +
-  annotation_custom(ggplotGrob(Fs), xmin = 0.6, xmax = 3.1, ymin = 50000, ymax = 80000)
+  annotation_custom(ggplotGrob(Fs), xmin = 0.6, xmax = 3.1, ymin = 45000, ymax = 75000)
 
 #Make composite plot
 
@@ -183,7 +188,8 @@ png(filename = "figures/gene_fig.png", width = 10.75, height = 7, units = "in",
     pointsize = 12, bg = "white",  res = 300)
 
 plot <- plot_grid(A, B, C, Db, Eb, Fb, ncol = 3, nrow = 2, 
-                  labels = genes, align = "hv", hjust = -0.6)
+                  labels = genes, align = "hv", 
+                  hjust = -0.6, vjust = 1.3)
 #want one common y axis label
 y.lab <- textGrob("Mean gene expression (FPKM)", rot = 90)
 #combine composite plot and y-axis label

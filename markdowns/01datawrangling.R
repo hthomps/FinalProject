@@ -4,7 +4,7 @@
 
 
 # load in transcriptome data
-dat <- read.csv("MothData.csv", header=T)
+dat <- read.csv("data/MothData.csv", header=T)
 # right now each column is a transcriptome and each row is a gene, 
 # with expression levels in the data cells
 # the transcriptome names include their tissue type and life stage

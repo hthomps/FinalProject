@@ -168,7 +168,8 @@ Fb <- ggplot(Fdat, aes(x = life_stage, y = mean_expression, colour = tissue, gro
   geom_point(size = 4) +
   geom_line() +
   theme_classic() +
-  theme(axis.title = element_blank(), legend.position = "none", text = element_text(size = 13)) +
+  theme(axis.title = element_blank(), legend.position = "none", 
+        text = element_text(size = 13)) +
   scale_y_continuous(limits = c(0, 80000), breaks = seq(0, 80000, 10000), labels = comma) +
   scale_x_discrete(labels = c("Second\ninstar\nlarva", "Third\ninstar\nlarva", 
                               "Fourth\ninstar\nlarva", "Fifth\ninstar\nlarva", "Pupa", "Adult")) +

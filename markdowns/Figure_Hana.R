@@ -68,7 +68,7 @@ C <- ggplot(Cdat, aes(x = life_stage, y = mean_expression, colour = tissue, grou
   geom_point(size = 4) +
   geom_line() +
   theme_classic() +
-  theme(axis.title = element_blank(), legend.position = c(0.8, 0.92), 
+  theme(axis.title = element_blank(), legend.position = c(0.8, 0.9), 
         legend.title = element_blank(), legend.text = element_text(size = 14),
         axis.text.x = element_blank(), text = element_text(size = 13)) +
   scale_y_continuous(limits = c(0, 80000), breaks = seq(0, 80000, 10000), labels = comma) +
@@ -178,11 +178,11 @@ Fb <- ggplot(Fdat, aes(x = life_stage, y = mean_expression, colour = tissue, gro
 #Make composite plot
 
 #save figure
-png(filename = "gene_fig.png", width = 10, height = 7, units = "in", 
+png(filename = "gene_fig.png", width = 10.75, height = 7, units = "in", 
     pointsize = 12, bg = "white",  res = 300)
 
 plot <- plot_grid(A, B, C, Db, Eb, Fb, ncol = 3, nrow = 2, 
-                  labels = genes, align = "hv", hjust = -0.7)
+                  labels = genes, align = "hv", hjust = -0.6)
 #want one common y axis label
 y.lab <- textGrob("Mean gene expression (FPKM)", rot = 90)
 #combine composite plot and y-axis label
